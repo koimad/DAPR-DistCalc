@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multiplyapp
+  labels:
+    app: multiply
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multiply
+  template:
+    metadata:
+      labels:
+        app: multiply
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "multiplyapp"
+        dapr.io/app-port: "80"
+        dapr.io/config: "tracing"
+        dapr.io/log-level: "debug"
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+      - name: multiply
+        image: koimad/multiply:latest
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always

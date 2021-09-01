@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  webapp:
+    image: koimad/calculator
+    ports:
+      - "8090:80"
+      - "8091:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8091
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=pass@word10
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - "//c/Users/koima/source/repos/DAPR DistCalc/DockerCompose/https:/https:ro"

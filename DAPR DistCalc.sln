@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subtract", "Subtract\Subtract.csproj", "{CD99A7D9-5C9B-4683-B7EC-1E2B5EE81279}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Add", "Add\Add.csproj", "{8630706E-B82D-4551-A39C-99B3E8B8E3E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multiply", "Multiply\Multiply.csproj", "{232639E1-390B-48B2-9321-8CCC0E1DDC7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Divide", "Divide\Divide.csproj", "{AC544183-0544-4A57-B00F-B1367A192FA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{D95F4AFD-BD5B-4BC6-9B0C-24B6D1135033}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\Add.yaml = Deploy\Add.yaml
+		Deploy\calculator.yaml = Deploy\calculator.yaml
+		Deploy\divide.yaml = Deploy\divide.yaml
+		Deploy\fluentd-config-map.yaml = Deploy\fluentd-config-map.yaml
+		Deploy\fluentd-dapr-with-rbac.yaml = Deploy\fluentd-dapr-with-rbac.yaml
+		Deploy\multiply.yaml = Deploy\multiply.yaml
+		Deploy\subtractor.yaml = Deploy\subtractor.yaml
+		Deploy\trace.yaml = Deploy\trace.yaml
+		Deploy\zipkin.yaml = Deploy\zipkin.yaml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator", "Calculator2\Calculator.csproj", "{37AF1D08-C650-4B0F-B32B-EE811D792395}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA8F9869-A0C3-467F-8630-6AC8E9DDB628}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD99A7D9-5C9B-4683-B7EC-1E2B5EE81279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD99A7D9-5C9B-4683-B7EC-1E2B5EE81279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD99A7D9-5C9B-4683-B7EC-1E2B5EE81279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD99A7D9-5C9B-4683-B7EC-1E2B5EE81279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8630706E-B82D-4551-A39C-99B3E8B8E3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8630706E-B82D-4551-A39C-99B3E8B8E3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8630706E-B82D-4551-A39C-99B3E8B8E3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8630706E-B82D-4551-A39C-99B3E8B8E3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232639E1-390B-48B2-9321-8CCC0E1DDC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232639E1-390B-48B2-9321-8CCC0E1DDC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232639E1-390B-48B2-9321-8CCC0E1DDC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232639E1-390B-48B2-9321-8CCC0E1DDC7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC544183-0544-4A57-B00F-B1367A192FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC544183-0544-4A57-B00F-B1367A192FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8151A04F-FBBF-4A55-A5F2-ABCAD3D66CDE}
+	EndGlobalSection
+EndGlobal

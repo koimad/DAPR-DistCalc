@@ -1,0 +1,74 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: calculator-front-end
+  labels:
+    app: calculator-front-end
+spec:
+  selector:
+    app: calculator-front-end
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8000
+    targetPort: 80
+  - name: https
+    protocol: TCP
+    port: 8001
+    targetPort: 443  
+  externalIPs:
+   - 192.168.0.28  
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator-front-end
+  labels:
+    app: calculator-front-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calculator-front-end
+  template:
+    metadata:
+      labels:
+        app: calculator-front-end
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "calculator-front-end"
+        dapr.io/app-port: "80"
+        dapr.io/config: "tracing"
+        dapr.io/log-level: "debug"
+        dapr.io/log-as-json: "true"
+        dapr.io/app-ssl: "true"
+    spec:
+      volumes:
+      - name: certstore
+        configMap:
+          name: certstore
+      containers:
+      - name: calculator-front-end
+        image: koimad/calculator:latest
+        env:
+         - name: ASPNETCORE_URLS
+           value: https://+:443;http://+:80
+         # - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+           # value: pass@word10
+         # - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+           # value: /https/aspnetapp.pfx
+         - name: ASPNETCORE_HTTPS_PORT
+           value: "8001"
+        ports:
+        - containerPort: 443
+          name: https
+        - containerPort: 80
+          name: http
+        imagePullPolicy: Always
+        # volumeMounts:
+        # - name: certstore
+          # mountPath: /https/aspnetapp.pfx
+          # subPath: aspnetapp.pfx
+          # readOnly: true
