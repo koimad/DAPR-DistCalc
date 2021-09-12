@@ -6,9 +6,25 @@
 version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/Add" # Location of package manifests
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/Divide" # Location of package manifests
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/Multiply" # Location of package manifests
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/Subtract" # Location of package manifests
+    schedule:
+      interval: "daily"
+
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/Calculator2/ClientApp" # Location of package manifests
     schedule:
