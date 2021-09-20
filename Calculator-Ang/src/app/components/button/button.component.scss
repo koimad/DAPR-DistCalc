@@ -1,0 +1,41 @@
+@import "../../../colours";
+
+:host {
+  display: inline-flex;
+  width: 25%;
+  flex: 1 0 auto;
+}
+
+:host(.wider) {
+  width: 50%; 
+}
+
+button {
+  background-color: $normal;
+  border: 0;
+  font-size: 2rem;
+  font-family: $font-familiy;
+  margin: 0 1px 0 0;
+  flex: 1 0 auto;
+  padding: 0;
+  color: $btn-numberic-text;
+}
+
+button:hover,
+button:focus {
+  background-color: $normal-hover;
+}
+
+:host:last-child button {
+  margin-right: 0;
+}
+
+.orange {
+  background-color: $hightlight;
+  color: $btn-operator-text;
+}
+
+.orange:hover,
+.orange:focus {
+  background-color: $hightlight-hover;
+}

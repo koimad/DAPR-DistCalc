@@ -12,14 +12,28 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 RUN apt-get update -yq \
     && apt-get install curl gnupg -yq \
     && curl -sL https://deb.nodesource.com/setup_16.x | bash \
-    && apt-get install nodejs -yq
+    && apt-get install nodejs -yq \
+    && npm install -g @angular/cli -yq
 
 WORKDIR /src
 COPY ["Calculator2/Calculator.csproj", "Calculator2/"]
 RUN dotnet restore "Calculator2/Calculator.csproj"
-COPY . .
+COPY "Calculator2/**" "Calculator2"
 WORKDIR "/src/Calculator2"
 RUN dotnet build "Calculator.csproj" -c Release -o /app/build
+
+WORKDIR /src
+COPY ["Calculator-Ang/Calculator-Ang.esproj", "Calculator-Ang/"]
+RUN dotnet restore "Calculator-Ang/Calculator-Ang.esproj"
+COPY "Calculator-Ang/**" "Calculator-Ang"
+
+WORKDIR "/src/Calculator-Ang"
+RUN npm install
+RUN ng build
+#RUN dotnet build "Calculator-Ang.esproj" -c Release
+CMD ["cp -r", "/src/Calculator-Ang/dist/.", "/app/publish/ClientApp/"]
+
+WORKDIR "/src/Calculator2"
 
 FROM build AS publish
 RUN dotnet publish "Calculator.csproj" -c Release -o /app/publish
@@ -27,4 +41,5 @@ RUN dotnet publish "Calculator.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "Calculator.dll"]

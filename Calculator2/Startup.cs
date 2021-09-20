@@ -27,7 +27,7 @@ namespace Calculator
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "ClientApp";
             });
 
             services.AddSwaggerGen(c =>
@@ -70,7 +70,7 @@ namespace Calculator
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp/build";
+                spa.Options.SourcePath = "ClientApp";
 
                 //if (env.IsDevelopment())
                 //{

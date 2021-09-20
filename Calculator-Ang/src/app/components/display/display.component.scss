@@ -1,0 +1,16 @@
+@import "../../../colours" ;
+
+:host {
+  background-color: $result-background;
+  color: $result-text;
+  text-align: right;
+  font-weight: 200;
+  font-family : $font-familiy;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+:host > div {
+  font-size: 2.5rem;
+  padding: 0.2rem 0.7rem 0.1rem 0.5rem;
+}

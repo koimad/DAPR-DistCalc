@@ -75,13 +75,15 @@ namespace Calculator
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+#if !DEBUG
                     webBuilder.UseKestrel(options => { options.ConfigureHttpsDefaults(SetupKestrel); });
+#endif
                     webBuilder.UseStartup<Startup>();
                 });
         }
 
-        #endregion
+#endregion
 
-        #endregion
+#endregion
     }
 }
