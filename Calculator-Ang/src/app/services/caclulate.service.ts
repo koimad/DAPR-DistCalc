@@ -21,21 +21,17 @@ export class CaclulateService {
 
     if (this.isNumber(buttonName)) {
       if (buttonName === "0" && state.next === "0") {
-        return new LocalState();
+        return {};
       }
       // If there is an operation, update next
       if (state.operation) {
         if (state.next) {
           return {
-            total: undefined,
-            next: state.next + buttonName,
-            operation: undefined,
+            next: state.next + buttonName
           };
         }
         return {
-          total: undefined,
-          next: buttonName,
-          operation: undefined
+          next: buttonName
         };
       }
       // If there is no operation, update next and clear the value
@@ -43,14 +39,12 @@ export class CaclulateService {
         const next = state.next === "0" ? buttonName : state.next + buttonName;
         return {
           total: null,
-          next,
-          operation: undefined
+          next
         };
       }
       return {
         total: null,
-        next: buttonName,
-        operation: undefined
+        next: buttonName
       };
     }
 
@@ -65,30 +59,24 @@ export class CaclulateService {
       }
       if (state.next) {
         return {
-          total: undefined,
-          next: (Number(state.next) / Number("100")).toString(),
-          operation: undefined
+          next: (Number(state.next) / Number("100")).toString()
         };
       }
-      return new LocalState();
+      return {};
     }
 
     if (buttonName === ".") {
       if (state.next) {
         // ignore a . if the next number already has one
         if (state.next.includes(".")) {
-          return new LocalState();
+          return {};
         }
         return {
-          total: undefined,
-          next: state.next + ".",
-          operation: undefined
+          next: state.next + "."
         };
       }
       return {
-        total: undefined,
-        next: "0.",
-        operation: undefined
+        next: "0."
       };
     }
 
@@ -102,26 +90,22 @@ export class CaclulateService {
         };
       } else {
         // '=' with no operation, nothing to do
-        return new LocalState();
+        return {};
       }
     }
 
     if (buttonName === "+/-") {
       if (state.next) {
         return {
-          operation: undefined,
           next: (-1 * parseFloat(state.next)).toString(),
-          total: undefined
         };
       }
       if (state.total) {
         return {
-          operation: undefined,
-          next: undefined,
           total: (-1 * parseFloat(state.total)).toString()
         };
       }
-      return new LocalState();
+      return {};
     }
 
     // Button must be an operation
@@ -129,7 +113,7 @@ export class CaclulateService {
     // When the user presses an operation button without having entered
     // a number first, do nothing.
     if (!state.next && !state.total) {
-      return new LocalState();
+      return {};
      }
 
     //// User pressed an operation button and there is an existing operation
@@ -146,11 +130,7 @@ export class CaclulateService {
 
     // The user hasn't typed a number yet, just save the operation
     if (!state.next) {
-      return {
-        next: undefined,
-        total: undefined,
-        operation: buttonName
-      };
+      return {};
     }
 
     // save the operation and shift 'next' into 'total'

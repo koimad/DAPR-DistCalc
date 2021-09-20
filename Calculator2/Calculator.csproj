@@ -2,14 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <!--<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>-->
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <UserSecretsId>086802cf-c3a9-49c5-a8b4-45fdbde8cb12</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
+
+	<!--Add Aditional Column for Debugging to the Angular App.-->
+	<PropertyGroup>
+		<DockerfileRunArguments>-v "$(SolutionDir)Calculator-Ang\dist:/app/ClientApp:ro"</DockerfileRunArguments>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapr.Client" Version="1.3.0" />
@@ -30,15 +33,6 @@
     <Folder Include="ClientApp\" />
   </ItemGroup>
 
-  <!--<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
-    --><!-- Ensure Node.js is installed --><!--
-    <Exec Command="node version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>-->
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
      <!--As part of publishing, ensure the JS resources are freshly built in production mode--> 
@@ -46,14 +40,14 @@
 	 <!--<exec workingdirectory="$(sparoot)" command="npm run build" />-->
 
     <!--Include the newly-built files in the publish output--> 
-    <ItemGroup>
+    <!--<ItemGroup>
       <DistFiles Include="$(SpaRoot)**" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
-    </ItemGroup>
+    </ItemGroup>-->
   </Target>
 
 </Project>
