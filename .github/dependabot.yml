@@ -24,6 +24,11 @@ updates:
     directory: "/Subtract" # Location of package manifests
     schedule:
       interval: "daily"
+      
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/Calculator" # Location of package manifests
+    schedule:
+      interval: "daily"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/Calculator-Ang" # Location of package manifests
