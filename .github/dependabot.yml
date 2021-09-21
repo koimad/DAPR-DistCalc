@@ -26,7 +26,7 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/Calculator2/ClientApp" # Location of package manifests
+    directory: "/Calculator-Ang" # Location of package manifests
     schedule:
       interval: "daily"   
   
