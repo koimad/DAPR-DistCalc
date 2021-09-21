@@ -22,7 +22,8 @@ namespace Calculator
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddDapr();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
