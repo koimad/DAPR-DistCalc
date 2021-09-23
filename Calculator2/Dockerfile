@@ -13,7 +13,7 @@ RUN apt-get update -yq \
     && apt-get install curl gnupg -yq \
     && curl -sL https://deb.nodesource.com/setup_16.x | bash \
     && apt-get install nodejs -yq \
-    && npm install -g @angular/cli@12.2.6 -yq
+    && npm install -g @angular/cli@12.2.7 -yq
 
 WORKDIR /src
 COPY ["Calculator2/Calculator.csproj", "Calculator2/"]
