@@ -16,7 +16,11 @@ export class CaclulateService {
   public async calculate(state: LocalState, buttonName: string): Promise<LocalState> {
 
     if (buttonName === "AC") {
-      return new LocalState();
+      return {
+        total: "0",
+        next: null,
+        operation: null
+      };
     }
 
     if (this.isNumber(buttonName)) {

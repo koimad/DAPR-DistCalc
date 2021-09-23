@@ -29,7 +29,7 @@ export class OperateService {
 
     const operation: string = this.operationMap[operationSymbol || "+"];
 
-    console.log(`Calling ${operation} service`);
+    console.debug(`Calling ${operation} service`);
 
     const message = JSON.stringify({
       operandOne,

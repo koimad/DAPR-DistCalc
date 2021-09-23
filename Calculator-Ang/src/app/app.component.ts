@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { LocalState } from './model/localState';
 import { CaclulateService } from './services/caclulate.service';
+import { StateService } from './services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -10,34 +11,38 @@ import { CaclulateService } from './services/caclulate.service';
 })
 export class AppComponent {
 
-  private state: LocalState = new LocalState();
+  private state: LocalState = {};
 
   value: string = "0";
 
-  constructor(private calculateService: CaclulateService) {
+  constructor(private calculateService: CaclulateService, private stateService: StateService) {
+    this.loadState();
   }
 
-    async OnPressed(buttonName: string) {
-      let value = await this.calculateService.calculate(this.state, buttonName);
+  async OnPressed(buttonName: string) {
+    let value = await this.calculateService.calculate(this.state, buttonName);
 
-      console.log(value);
+    this.setState(value);
 
-      //this.state.next = value.next || this.state.next;
-      //this.state.total = value.total || this.state.total;
-      //this.state.operation = value.operation || this.state.operation;
+    this.value = this.state.next || this.state.total || "0";
 
-      this.state.next = value.next === undefined ?  this.state.next : value.next;
-      this.state.total = value.total === undefined ? this.state.total : value.total;
-      this.state.operation = value.operation === undefined ? this.state.operation : value.operation;
-
-      console.log(this.state);
-
-    //this.persistState(this.state);
-     this.value = this.state.next || this.state.total || "0";
-
-
+    this.stateService.persistState(this.state);
   }
-  
+
+  setState(newState: LocalState) {
+    this.state.next = newState.next === undefined ? this.state.next : newState.next;
+    this.state.total = newState.total === undefined ? this.state.total : newState.total;
+    this.state.operation = newState.operation === undefined ? this.state.operation : newState.operation;    
+  }
+
+
+  async loadState() {
+    const savedState = await this.stateService.getState();
+    if (savedState) {
+      this.setState(savedState);
+      this.value = this.state.next || this.state.total || "0";
+    }
+  }  
 }
 
 

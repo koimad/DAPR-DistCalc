@@ -103,13 +103,12 @@ namespace Calculator
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseKestrel(options => { options.ConfigureHttpsDefaults(SetupKestrel); });
-
                     webBuilder.UseStartup<Startup>();
                 });
         }
 
-#endregion
+        #endregion
 
-#endregion
+         #endregion
     }
 }
