@@ -104,10 +104,40 @@
             ],
             "scripts": []
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "Calculator-Ang:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Calculator-Ang:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "Calculator-Ang:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Calculator-Ang:serve:production"
+            }
+          }
         }
       }
     }
-    
   },
   "defaultProject": "Calculator-Ang"
 }

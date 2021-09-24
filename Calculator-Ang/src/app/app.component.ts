@@ -13,13 +13,13 @@ export class AppComponent {
 
   private state: LocalState = {};
 
-  value: string = "0";
+  public value: string = "0";
 
-  constructor(private calculateService: CaclulateService, private stateService: StateService) {
+  public constructor(private calculateService: CaclulateService, private stateService: StateService) {
     this.loadState();
   }
 
-  async OnPressed(buttonName: string) {
+  private async OnPressed(buttonName: string) {
     let value = await this.calculateService.calculate(this.state, buttonName);
 
     this.setState(value);
@@ -29,18 +29,20 @@ export class AppComponent {
     this.stateService.persistState(this.state);
   }
 
-  setState(newState: LocalState) {
+
+  private setState(newState: LocalState) {
     this.state.next = newState.next === undefined ? this.state.next : newState.next;
     this.state.total = newState.total === undefined ? this.state.total : newState.total;
     this.state.operation = newState.operation === undefined ? this.state.operation : newState.operation;    
   }
 
 
-  async loadState() {
+  private async loadState() {
     const savedState = await this.stateService.getState();
+    
     if (savedState) {
       this.setState(savedState);
-      this.value = this.state.next || this.state.total || "0";
+      this.value = this.state.next || this.state.total ||  "0";      
     }
   }  
 }

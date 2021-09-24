@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonComponent } from '../button/button.component';
 
 import { ButtonPanelComponent } from './button-panel.component';
 
@@ -8,7 +9,7 @@ describe('ButtonPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonPanelComponent ]
+      declarations: [ButtonPanelComponent, ButtonComponent ]
     })
     .compileComponents();
   });

@@ -11,12 +11,12 @@ export class ButtonComponent implements OnInit {
 
   @Input() name: string = '';
 
-  @Input() highlight: boolean = false;
+  @Input() public highlight: boolean = false;
 
   @Input()
-  @HostBinding('class.wider') wide: boolean = false;
+  @HostBinding('class.wider') public wide: boolean = false;
 
-  @Output() buttonPressed: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public buttonPressed: EventEmitter<string> = new EventEmitter<string>();
 
   ngOnInit(): void {
 

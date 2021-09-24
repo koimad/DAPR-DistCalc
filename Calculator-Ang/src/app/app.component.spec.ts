@@ -1,31 +1,90 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule,HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ButtonComponent } from './components/button/button.component';
+import { CaclulateService } from './services/caclulate.service';
+import { StateService } from './services/state.service';
+import { of } from 'rxjs';
+import { ButtonPanelComponent } from './components/button-panel/button-panel.component';
+import { DisplayComponent } from './components/display/display.component';
+import { LocalState } from './model/localState';
 
 describe('AppComponent', () => {
+
+  let calculateService: jasmine.SpyObj<CaclulateService>;
+  let stateService: jasmine.SpyObj<StateService>;
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+
+    stateService = jasmine.createSpyObj<StateService>(['getState']);
+    calculateService = jasmine.createSpyObj<CaclulateService>(['calculate']);
+   
+    TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent, ButtonPanelComponent, DisplayComponent, ButtonComponent
       ],
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: CaclulateService, useValue: calculateService },
+        { provide: StateService, useValue: stateService },
+      ]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
+  it('should create the app', async () => {
+    
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Calculator-Ang'`, () => {
+
+  it('Initial Value should be 0 with no state set', async () => {
+
+    stateService.getState.and.returnValue(of({}).toPromise());
+
     const fixture = TestBed.createComponent(AppComponent);
+
+    fixture.detectChanges();
+
     const app = fixture.componentInstance;
-    //expect(app.title).toEqual('Calculator-Ang');
+
+    fixture.whenStable().then(() => {
+      expect(app.value).toBe("0");
+    });
   });
 
-  it('should render title', () => {
+
+  it('Initial Value should be populated from total when next is not set', async () => {
+
+    stateService.getState.and.returnValue(of({ total: "12", next: null, operation: null }).toPromise());
+
     const fixture = TestBed.createComponent(AppComponent);
+
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Calculator-Ang app is running!');
+
+    const app = fixture.componentInstance;
+
+    fixture.whenStable().then(() => {
+      expect(app.value).toBe("12");
+    });
+  });
+
+
+  it('Initial Value should be populated from next when next is set', async () => {
+
+    stateService.getState.and.returnValue(of({ total: "12", next: "99", operation: null }).toPromise());
+
+    const fixture = TestBed.createComponent(AppComponent);
+
+    fixture.detectChanges();
+
+    const app = fixture.componentInstance;
+
+    fixture.whenStable().then(() => {
+      expect(app.value).toBe("99");
+    });
+
   });
 });

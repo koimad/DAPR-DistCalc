@@ -2,15 +2,27 @@ import { TestBed } from '@angular/core/testing';
 
 import { CaclulateService } from './caclulate.service';
 
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
 describe('CaclulateService', () => {
-  let service: CaclulateService;
+
+  let httpMock: HttpTestingController;
+  let target: CaclulateService;
+
+  beforeAll(() => {
+    TestBed.configureTestingModule({
+      declarations: [],
+      imports: [HttpClientTestingModule],
+      providers: []
+    });
+  })
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(CaclulateService);
+    
+    target = TestBed.inject(CaclulateService);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(target).toBeTruthy();
   });
 });
