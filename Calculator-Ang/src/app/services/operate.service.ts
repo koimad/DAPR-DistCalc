@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
 
 
 
@@ -18,7 +19,7 @@ export class OperateService {
 
   constructor(private httpClient: HttpClient) { }
 
-  async operate(operandOne: string | null | undefined, operandTwo: string | null | undefined, operationSymbol: string | null | undefined): Promise<string> {
+  public async operate(operandOne: string | null | undefined, operandTwo: string | null | undefined, operationSymbol: string | null | undefined): Promise<string> {
 
     operandOne = operandOne || "0";
     operandTwo =
@@ -36,7 +37,7 @@ export class OperateService {
       operandTwo
     })
 
-    console.log(message);
+    console.info(message);
 
     const rawResponse = await this.httpClient.post(`/calculate/${operation}`, message, {
       headers: {
@@ -44,7 +45,9 @@ export class OperateService {
         'Content-Type': "application/json",
       },
       responseType: "json"
-    }).toPromise();
+    })
+      .pipe(tap(f => { console.debug(`operate service /calculate/${operation} return: ${JSON.stringify(f)}`); }))
+      .toPromise();
     
     return rawResponse.toString();
   }

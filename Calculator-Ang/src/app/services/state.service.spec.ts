@@ -4,7 +4,7 @@ import { StateService } from './state.service';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
-import { LocalState } from '../model/localState';
+
 
 describe('StateService', () => {
 

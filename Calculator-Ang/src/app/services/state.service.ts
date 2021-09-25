@@ -41,7 +41,7 @@ export class StateService {
       {
         responseType: "json"
       }
-    ).pipe(tap(f => { console.log(`state service getState return: ${JSON.stringify(f)}`); }))
+    ).pipe(tap(f => { console.debug(`state service getState return: ${JSON.stringify(f)}`); }))
       .toPromise();
 
     const calculatorState = rawResponse;
