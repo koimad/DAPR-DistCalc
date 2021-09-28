@@ -73,7 +73,7 @@ export class CaclulateService {
       if (state.next) {
         // ignore a . if the next number already has one
         if (state.next.includes(".")) {
-          return {};
+          return { next: state.next };
         }
         return {
           next: state.next + "."
