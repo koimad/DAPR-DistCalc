@@ -204,7 +204,7 @@ describe('CaclulateService', () => {
       target.calculate({ operation: "+", next: "123", total:"1"}, "=").then(f => {
         expect(f.total).toBe("124");
         expect(f.next).toBe(null);
-        expect(f.operation).toBe(null);
+        expect(f.operation).toBe(undefined);
 
         testCompleted();
       });

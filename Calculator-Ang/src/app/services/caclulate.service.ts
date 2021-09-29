@@ -90,7 +90,7 @@ export class CaclulateService {
         return {
           total,
           next: null,
-          operation: null,
+          operation: undefined,
         };
       } else {
         // '=' with no operation, nothing to do

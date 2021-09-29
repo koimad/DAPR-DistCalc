@@ -19,7 +19,7 @@ export class AppComponent {
     this.loadState();
   }
 
-  private async OnPressed(buttonName: string) {
+  public async OnPressed(buttonName: string) {
     let value = await this.calculateService.calculate(this.state, buttonName);
 
     this.setState(value);
@@ -31,9 +31,14 @@ export class AppComponent {
 
 
   private setState(newState: LocalState) {
+
+    console.info(`Changing State From "Next: " ${this.state.next}, "Operation: " ${this.state.operation}, "Total:" ${this.state.total}`);
+
     this.state.next = newState.next === undefined ? this.state.next : newState.next;
     this.state.total = newState.total === undefined ? this.state.total : newState.total;
-    this.state.operation = newState.operation === undefined ? this.state.operation : newState.operation;    
+    this.state.operation = newState.operation === undefined ? this.state.operation : newState.operation;
+
+    console.info(`Setting State to "Next: " ${this.state.next}, "Operation: " ${this.state.operation}, "Total:" ${this.state.total}`);
   }
 
 
