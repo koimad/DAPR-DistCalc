@@ -20,46 +20,52 @@ describe('CaclulateService', () => {
       providers: [{ provide: OperateService, useValue: operateService }]
     });
 
-
     target = TestBed.inject(CaclulateService);
   });
+
 
   it('should be created', () => {
     expect(target).toBeTruthy();
   });
 
-  it ('calculate with "AC"', (testCompleted) => {
 
-    target.calculate({}, "AC").then(f =>
-    {
+  it('calculate with "AC"', (testCompleted) => {
+
+    target.calculate({}, "AC").then(f => {
       expect(f.total).toBe("0");
       expect(f.next).toBe(null);
       expect(f.operation).toBe(null);
+
       testCompleted();
-    });    
+    });
   });
+
 
   describe("Test the numbers", () => {
 
-  it('calculate with next 0 and button name 0', (testCompleted) => {
+    it('calculate with next 0 and button name 0', (testCompleted) => {
 
-    target.calculate({ next: "0"}, "0").then(f => {
-      expect(f.total).toBe(undefined);
-      expect(f.next).toBe(undefined);
-      expect(f.operation).toBe(undefined);
-      testCompleted();
+      target.calculate({ next: "0" }, "0").then(f => {
+        expect(f.total).toBe(undefined);
+        expect(f.next).toBe(undefined);
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
     });
-  });
 
-  it('calculate with next 1 and button name 6', (testCompleted) => {
 
-    target.calculate({ next: "1" }, "7").then(f => {
-      expect(f.total).toBe(null);
-      expect(f.next).toBe("17");
-      expect(f.operation).toBe(undefined);
-      testCompleted();
+    it('calculate with next 1 and button name 6', (testCompleted) => {
+
+      target.calculate({ next: "1" }, "7").then(f => {
+        expect(f.total).toBe(null);
+        expect(f.next).toBe("17");
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
     });
-  });
+
 
     it('calculate with next 2 and button name 9 and operation defined', (testCompleted) => {
 
@@ -67,9 +73,11 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe("29");
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
+
 
     it('calculate with next undefined and button name 8 and operation defined', (testCompleted) => {
 
@@ -77,20 +85,25 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe("8");
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
+
 
     it('calculate with next undefined and button name 3 and operation undefined', (testCompleted) => {
 
-      target.calculate({ }, "3").then(f => {
+      target.calculate({}, "3").then(f => {
         expect(f.total).toBe(null);
         expect(f.next).toBe("3");
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
-  })
+
+  });
+
 
   it('calculate button % with operation and next defined', (testCompleted) => {
     
@@ -100,10 +113,12 @@ describe('CaclulateService', () => {
       expect(f.total).toBe("0.3");
       expect(f.next).toBe(null);
       expect(f.operation).toBe(null);
+
       testCompleted();
     });
     
   });
+
 
   describe("Test the . button", () => {
 
@@ -113,9 +128,11 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe("0.");
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
+
 
     it('calculate button . with next excludes .', (testCompleted) => {
 
@@ -123,9 +140,11 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe("123.");
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
+
 
     it('calculate button . with next including .', (testCompleted) => {
 
@@ -133,10 +152,12 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe("12356.");
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
   })
+
 
   describe("Test the = button", () => {
 
@@ -146,9 +167,11 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe(undefined);
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
+
 
     it('calculate button = with no operation', (testCompleted) => {
 
@@ -156,9 +179,11 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe(undefined);
         expect(f.operation).toBe(undefined);
+
         testCompleted();
       });
     });
+
 
     it('calculate button = with no next', (testCompleted) => {
 
@@ -166,11 +191,13 @@ describe('CaclulateService', () => {
         expect(f.total).toBe(undefined);
         expect(f.next).toBe(undefined);
         expect(f.operation).toBe(undefined);
+
         testCompleted();
-      });
+       });
     });
 
-    it('calculate button = with oparation and next', (testCompleted) => {
+
+    it('calculate button = with operation and next', (testCompleted) => {
 
       operateService.operate.withArgs("1", "123", "+").and.returnValue(Promise.resolve("124"))
 
@@ -178,9 +205,144 @@ describe('CaclulateService', () => {
         expect(f.total).toBe("124");
         expect(f.next).toBe(null);
         expect(f.operation).toBe(null);
+
         testCompleted();
       });
     });
 
   });
+
+
+  describe("Test the +/- button", () => {
+
+    it('calculate button +/- with no next or total', (testCompleted) => {
+
+      target.calculate({
+      }, "+/-").then(f => {
+        expect(f.total).toBe(undefined);
+        expect(f.next).toBe(undefined);
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate button +/- with positive valued next', (testCompleted) => {
+
+      target.calculate({ next: "21"
+      }, "+/-").then(f => {
+        expect(f.total).toBe(undefined);
+        expect(f.next).toBe("-21");
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate button +/- with negative valued next', (testCompleted) => {
+
+      target.calculate({
+        next: "-21"
+      }, "+/-").then(f => {
+        expect(f.total).toBe(undefined);
+        expect(f.next).toBe("21");
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate button +/- with positive valued total', (testCompleted) => {
+
+      target.calculate({
+        total: "21.11"
+      }, "+/-").then(f => {
+        expect(f.next).toBe(undefined);
+        expect(f.total).toBe("-21.11");
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate button +/- with negative valued total', (testCompleted) => {
+
+      target.calculate({
+        total: "-21.11"
+      }, "+/-").then(f => {
+        expect(f.next).toBe(undefined);
+        expect(f.total).toBe("21.11");
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+  });
+
+
+  describe("Test the operation buttons ", () => {
+
+    it('calculate operation with no next or total', (testCompleted) => {
+
+      target.calculate({
+        }, "+").then(f => {
+        expect(f.next).toBe(undefined);
+        expect(f.total).toBe(undefined);
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate operation with no total and with next and a operation', (testCompleted) => {
+
+      operateService.operate.withArgs(undefined, "1", "-").and.returnValue(Promise.resolve("0"));
+
+      target.calculate({
+        next:"1",
+        operation: "-"}, "+").then(f => {
+        expect(f.next).toBe(null);
+        expect(f.total).toBe("0");
+        expect(f.operation).toBe("+");
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate operation with no next and with a total and no operation', (testCompleted) => {
+
+      target.calculate({
+        total: "1",        
+      }, "+").then(f => {
+        expect(f.next).toBe(undefined);
+        expect(f.total).toBe(undefined);
+        expect(f.operation).toBe(undefined);
+
+        testCompleted();
+      });
+    });
+
+
+    it('calculate operation with next, a total and no operation', (testCompleted) => {
+
+      target.calculate({
+        next:"2",
+        total: "1",
+      }, "+").then(f => {
+        expect(f.next).toBe(null);
+        expect(f.total).toBe("2");
+        expect(f.operation).toBe("+");
+
+        testCompleted();
+      });
+    });
+  });
+
 });
