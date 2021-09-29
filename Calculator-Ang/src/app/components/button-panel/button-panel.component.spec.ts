@@ -9,18 +9,34 @@ describe('ButtonPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ButtonPanelComponent, ButtonComponent ]
+      declarations: [ButtonPanelComponent, ButtonComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ButtonPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('should emit event when clicked', () => {
+
+    let invokeName = "";
+
+    const subscription = component.buttonPressed.subscribe(f => { invokeName = f })
+
+    component.OnPressed("123");
+
+    expect(invokeName).toBe("123");
+
+    subscription.unsubscribe();
+  });
+
 });
+

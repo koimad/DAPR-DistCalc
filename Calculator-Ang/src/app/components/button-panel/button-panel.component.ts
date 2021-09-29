@@ -7,7 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class ButtonPanelComponent implements OnInit {
 
-    @Output() buttonPressed: EventEmitter<string> = new EventEmitter<string>();
+  @Output() buttonPressed: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
@@ -15,8 +15,7 @@ export class ButtonPanelComponent implements OnInit {
   }
 
   OnPressed(buttonName: string) {
-    this.buttonPressed.emit(buttonName);
-    
+    this.buttonPressed.emit(buttonName);    
   }
 
 }
