@@ -11,6 +11,8 @@ export class ButtonComponent implements OnInit {
 
   @Input() name: string = '';
 
+  get testComponentName() { return `Calc-Button-${this.name}`;  }
+
   @Input() public highlight: boolean = false;
 
   @Input()
