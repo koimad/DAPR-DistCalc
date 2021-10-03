@@ -3,11 +3,10 @@ describe('Verify Calculator Add Functionality', () => {
 
   beforeEach(() => {
     cy.intercept('GET', '/calculate/state', '{"total":null,"next":"0","operation":null}');
-    cy.visit('/')
+    cy.visit('/');
   });
 
   it('Verify 1 + 1 = 2', () => {
-    
 
     const expectedPersistCalls = [
       '{"key":"calculatorState","value":{"next":"1","total":null,"operation":null}}',
@@ -72,7 +71,4 @@ describe('Verify Calculator Add Functionality', () => {
     cy.get('[data-cy=Calc-Button-\\=]').click();
     cy.get("[data-cy=Calc-Display]").should('contain', 302);
   });
-
-
-
 });

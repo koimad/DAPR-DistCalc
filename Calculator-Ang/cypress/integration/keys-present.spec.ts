@@ -5,7 +5,8 @@ describe('Verify Calculator Loading and Displaying Keys', () => {
   it('Verify AC', () => {
     cy.intercept('GET', '/calculate/state', '{"total":null,"next":"0","operation":null}');
     cy.visit('/')
-    cy.contains('AC')    
+    cy.get("[data-cy=Calc-Button-AC]").should('contain', "AC");
+    
   })
 
   it('Verify +/-', () => {
