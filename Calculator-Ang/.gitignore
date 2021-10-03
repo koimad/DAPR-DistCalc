@@ -10,6 +10,10 @@
 # dependencies
 /node_modules
 
+# cypress files
+/cypress/videos/*
+/cypress/screenshots/*
+
 # profiling files
 chrome-profiler-events*.json
 

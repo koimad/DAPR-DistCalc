@@ -10,7 +10,9 @@
     "prestart": "node aspnetcore-https",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "ci:start-server": "angular-http-server --path ./dist -p 4200",
+    "ci:run": "start-server-and-test ci:start-server http://localhost:4200 cypress:run"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +35,7 @@
     "@cypress/schematic": "^1.5.1",
     "@types/jasmine": "~3.9.1",
     "@types/node": "^12.11.1",
+    "angular-http-server": "^1.10.0",
     "cypress": "8.5.0",
     "jasmine-core": "~3.9.0",
     "karma": "~6.3.4",
@@ -41,6 +44,7 @@
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "~1.7.0",
     "npm-check-updates": "^11.8.5",
+    "start-server-and-test": "^1.14.0",
     "typescript": "~4.3.5"
   }
 }

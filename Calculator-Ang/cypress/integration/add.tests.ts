@@ -21,6 +21,11 @@ describe('Verify Calculator Add Functionality', () => {
       expect(JSON.stringify(r.body)).to.equal(expectedPersistCalls[callCountIndex++]);            
     });
 
+    cy.intercept('POST', '/calculate/add', r => {
+      expect(JSON.stringify(r.body)).to.equal('{"operandOne":"1","operandTwo":"1"}');
+      r.reply({ 'body': '2' });
+    });
+
     cy.get("[data-cy=Calc-Button-1]").click();
     cy.get("[data-cy=Calc-Display]").should('contain', 1);
     cy.get("[data-cy=Calc-Button-\\+]").click();
@@ -49,6 +54,11 @@ describe('Verify Calculator Add Functionality', () => {
     cy.intercept('POST', '/calculate/persist', r => {
       console.log(r.body);
       expect(JSON.stringify(r.body)).to.equal(expectedPersistCalls[callCountIndex++]);
+    });
+
+    cy.intercept('POST', '/calculate/add', r => {
+      expect(JSON.stringify(r.body)).to.equal('{"operandOne":"11","operandTwo":"291"}');
+      r.reply({ 'body': '302' });
     });
 
     cy.get("[data-cy=Calc-Button-1]").click();
