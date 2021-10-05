@@ -16,11 +16,11 @@ RUN apt-get update -yq \
     && npm install -g @angular/cli@12.2.7 -yq
 
 WORKDIR /src
-COPY ["Calculator2/Calculator.csproj", "Calculator2/"]
-RUN dotnet restore "Calculator2/Calculator.csproj"
-COPY "Calculator2/**" "Calculator2"
-WORKDIR "/src/Calculator2"
-RUN dotnet build "Calculator.csproj" -c Release -o /app/build
+COPY ["Calculator-Server/Calculator-Server.csproj", "Calculator2/"]
+RUN dotnet restore "Calculator-Server/Calculator-Server.csproj"
+COPY "Calculator-Server/**" "Calculator-Server"
+WORKDIR "/src/Calculator-Server"
+RUN dotnet build "Calculator-Server.csproj" -c Release -o /app/build
 
 WORKDIR /src
 COPY "Calculator-Ang/" "Calculator-Ang/"
@@ -29,14 +29,14 @@ WORKDIR "/src/Calculator-Ang"
 RUN npm install \
     && ng build -c production
 
-WORKDIR "/src/Calculator2"
+WORKDIR "/src/Calculator-Server"
 
 FROM build AS publish
-RUN dotnet publish "Calculator.csproj" -c Release -o /app/publish
+RUN dotnet publish "Calculator-Server.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=build /src/Calculator-Ang/dist ClientApp/.
 
-ENTRYPOINT ["dotnet", "Calculator.dll"]
+ENTRYPOINT ["dotnet", "Calculator-Server.dll"]
