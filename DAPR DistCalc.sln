@@ -24,14 +24,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{D95F4A
 		Deploy\zipkin.yaml = Deploy\zipkin.yaml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator", "Calculator2\Calculator.csproj", "{37AF1D08-C650-4B0F-B32B-EE811D792395}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA8F9869-A0C3-467F-8630-6AC8E9DDB628}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Calculator-Ang", "Calculator-Ang\Calculator-Ang.esproj", "{792F44ED-88E0-420A-A618-81C081B6BB7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator-Server", "Calculator-Server\Calculator-Server.csproj", "{FE1D3075-DD76-41B9-BE22-91BCF479286F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{91DE5565-94F9-4F72-B664-D8B0D0B663FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{468582C7-7799-4541-A580-E064F6590EA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,19 +59,27 @@ Global
 		{AC544183-0544-4A57-B00F-B1367A192FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37AF1D08-C650-4B0F-B32B-EE811D792395}.Release|Any CPU.Build.0 = Release|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FE1D3075-DD76-41B9-BE22-91BCF479286F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE1D3075-DD76-41B9-BE22-91BCF479286F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE1D3075-DD76-41B9-BE22-91BCF479286F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE1D3075-DD76-41B9-BE22-91BCF479286F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD99A7D9-5C9B-4683-B7EC-1E2B5EE81279} = {91DE5565-94F9-4F72-B664-D8B0D0B663FF}
+		{8630706E-B82D-4551-A39C-99B3E8B8E3E4} = {91DE5565-94F9-4F72-B664-D8B0D0B663FF}
+		{232639E1-390B-48B2-9321-8CCC0E1DDC7C} = {91DE5565-94F9-4F72-B664-D8B0D0B663FF}
+		{AC544183-0544-4A57-B00F-B1367A192FA3} = {91DE5565-94F9-4F72-B664-D8B0D0B663FF}
+		{792F44ED-88E0-420A-A618-81C081B6BB7C} = {468582C7-7799-4541-A580-E064F6590EA8}
+		{FE1D3075-DD76-41B9-BE22-91BCF479286F} = {91DE5565-94F9-4F72-B664-D8B0D0B663FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8151A04F-FBBF-4A55-A5F2-ABCAD3D66CDE}
