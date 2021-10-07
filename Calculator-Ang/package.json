@@ -23,7 +23,7 @@
     "@angular/forms": "~12.2.8",
     "@angular/platform-browser": "~12.2.8",
     "@angular/platform-browser-dynamic": "~12.2.8",
-    "@angular/router": "~12.2.8",
+    "@angular/router": "~12.2.9",
     "jest-editor-support": "*",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
