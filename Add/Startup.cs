@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ServerCore.Extensions;
 
 namespace Add
 {
@@ -38,6 +39,8 @@ namespace Add
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseAndExceptionWrapper();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -39,28 +39,28 @@ namespace Add.Controllers
 
         private async Task GetTraceInformation(Operands operands)
         {
-            String port = Environment.GetEnvironmentVariable(_daprHttpPort) == null
-                ? _defaultPort
-                : Environment.GetEnvironmentVariable(_daprHttpPort);
+            //String port = Environment.GetEnvironmentVariable(_daprHttpPort) == null
+            //    ? _defaultPort
+            //    : Environment.GetEnvironmentVariable(_daprHttpPort);
 
-            String daprUrl = $"http://localhost:{port}/v1.0/invoke";
+            //String daprUrl = $"http://localhost:{port}/v1.0/invoke";
 
-            using (HttpClient httpClient = new())
-            {
-                if (Request.Headers.TryGetValue(_traceparent, out StringValues values1))
-                {
-                    String traceparentValue = values1.First();
+            //using (HttpClient httpClient = new())
+            //{
+            //    if (Request.Headers.TryGetValue(_traceparent, out StringValues values1))
+            //    {
+            //        String traceparentValue = values1.First();
 
-                    httpClient.DefaultRequestHeaders.Add(_traceparent, new List<String> {traceparentValue});
+            //        httpClient.DefaultRequestHeaders.Add(_traceparent, new List<String> {traceparentValue});
 
-                    HttpContent content = JsonContent.Create(operands);
+            //        HttpContent content = JsonContent.Create(operands);
 
-                    await httpClient.PostAsync(daprUrl + "/multiplyapp/method/multiply", content);
-                    await httpClient.PostAsync(daprUrl + "/subtractapp/method/subtract", content);
-                    await httpClient.PostAsync(daprUrl + "/divideapp/method/divide", content);
-                    await httpClient.PostAsync(daprUrl + "/divideapp/method/divide", content);
-                }
-            }
+            //        await httpClient.PostAsync(daprUrl + "/multiplyapp/method/multiply", content);
+            //        await httpClient.PostAsync(daprUrl + "/subtractapp/method/subtract", content);
+            //        await httpClient.PostAsync(daprUrl + "/divideapp/method/divide", content);
+            //        await httpClient.PostAsync(daprUrl + "/divideapp/method/divide", content);
+            //    }
+            //}
         }
 
         #endregion
