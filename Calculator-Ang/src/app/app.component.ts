@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { LocalState } from './model/localState';
-import { CaclulateService } from './services/caclulate.service';
 import { StateService } from './services/state.service';
+import {CalculateService} from './services/calculate.service';
+
+
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent {
 
   public value: string = "0";
 
-  public constructor(private calculateService: CaclulateService, private stateService: StateService) {
+  public constructor(private calculateService: CalculateService, private stateService: StateService) {
     this.loadState();
   }
 

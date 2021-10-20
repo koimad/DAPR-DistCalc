@@ -5,7 +5,7 @@ import { OperateService } from './operate.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CaclulateService {
+export class CalculateService {
   
   constructor(private operate: OperateService) { }
 

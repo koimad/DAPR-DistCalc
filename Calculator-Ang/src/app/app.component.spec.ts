@@ -3,7 +3,7 @@ import { HttpClientTestingModule,HttpTestingController } from '@angular/common/h
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './components/button/button.component';
-import { CaclulateService } from './services/caclulate.service';
+import { CalculateService } from './services/calculate.service';
 import { StateService } from './services/state.service';
 import { of } from 'rxjs';
 import { ButtonPanelComponent } from './components/button-panel/button-panel.component';
@@ -12,13 +12,13 @@ import { DisplayComponent } from './components/display/display.component';
 
 describe('AppComponent', () => {
 
-  let calculateService: jasmine.SpyObj<CaclulateService>;
+  let calculateService: jasmine.SpyObj<CalculateService>;
   let stateService: jasmine.SpyObj<StateService>;
 
   beforeEach(async () => {
 
     stateService = jasmine.createSpyObj<StateService>(['getState']);
-    calculateService = jasmine.createSpyObj<CaclulateService>(['calculate']);
+    calculateService = jasmine.createSpyObj<CalculateService>(['calculate']);
    
     TestBed.configureTestingModule({
       declarations: [
@@ -26,7 +26,7 @@ describe('AppComponent', () => {
       ],
       imports: [HttpClientTestingModule],
       providers: [
-        { provide: CaclulateService, useValue: calculateService },
+        { provide: CalculateService, useValue: calculateService },
         { provide: StateService, useValue: stateService },
       ]
     }).compileComponents();

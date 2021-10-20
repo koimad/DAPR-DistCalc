@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { LocalState } from '../model/localState';
 
-import { CaclulateService } from './caclulate.service';
+import { CalculateService } from './calculate.service';
 
 import { OperateService } from './operate.service';
 
-describe('CaclulateService', () => {
+describe('CalculateService', () => {
 
-  let target: CaclulateService;
+  let target: CalculateService;
   let operateService: jasmine.SpyObj<OperateService>;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('CaclulateService', () => {
       providers: [{ provide: OperateService, useValue: operateService }]
     });
 
-    target = TestBed.inject(CaclulateService);
+    target = TestBed.inject(CalculateService);
   });
 
 
@@ -31,7 +31,8 @@ describe('CaclulateService', () => {
 
   it('calculate with "AC"', (testCompleted) => {
 
-    target.calculate({}, "AC").then(f => {
+    target.calculate({next:"0", operation :"+", total:"1"}, "AC").then(f => {
+
       expect(f.total).toBe("0");
       expect(f.next).toBe(null);
       expect(f.operation).toBe(null);
