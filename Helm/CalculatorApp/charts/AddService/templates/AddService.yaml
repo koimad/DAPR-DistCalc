@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.AddService.name}}-{{ .Chart.AppVersion}}-{{ .Release.Revision}}
+  labels:
+    app: {{ .Values.AddService.name}}
+spec:
+  replicas: {{ .Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{ .Values.AddService.name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.AddService.name}}
+      annotations:
+        dapr.io/enabled: "{{ .Values.AddService.dapr.enabled}}"
+        dapr.io/app-id: "{{ .Values.AddService.name}}"
+        dapr.io/app-port: "{{ .Values.AddService.port}}"
+        dapr.io/config: "{{ .Values.AddService.dapr.config}}"
+        dapr.io/log-level: "{{ .Values.AddService.dapr.log_level}}"
+        dapr.io/log-as-json: "{{ .Values.AddService.dapr.log_as_json}}"
+    spec:
+      containers:
+      - name: {{ .Values.AddService.name}}
+        image: {{ .Values.AddService.Image.repository}}
+        ports:
+        - containerPort: {{ .Values.AddService.port}}
+        imagePullPolicy: {{ .Values.AddService.Image.pullPolicy}}

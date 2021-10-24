@@ -48,40 +48,28 @@ namespace Calculator
                 ? _defaultPort
                 : Environment.GetEnvironmentVariable(_daprHttpPort);
 
-            Boolean isStandalone = Environment.GetEnvironmentVariable("STANDALONE") == null
-                ? false
-                : Boolean.Parse(Environment.GetEnvironmentVariable("STANDALONE"));
+            _certificateContents = Environment.GetEnvironmentVariable("CERTIFICATE") == null
+                ? String.Empty
+                : Environment.GetEnvironmentVariable("CERTIFICATE");
 
-            Dictionary<String, String> secretValues = null;
-
-            if (isStandalone)
+            
+            if (!String.IsNullOrWhiteSpace(_certificateContents))
             {
-                Console.WriteLine("Using Standalone");
-                HttpClient httpClient = new();
-                try
-                {
-                    using (var response = await httpClient.GetAsync($"http://localhost:{port}/v1.0/secrets/kubernetes/cert-secret-store"))
-                    {
-                        secretValues = await response.Content.ReadAsAsync<Dictionary<String, String>>();
-                        _secret = secretValues["cert-password"];
-                        _certificateContents = secretValues["cert-contents"];
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                Console.WriteLine("Using Developer Certificate");
+                _secret = Environment.GetEnvironmentVariable("PASSWORD");
+                
             }
             else
             {
                 Console.WriteLine("Using Dapr");
+   
                 DaprClient client = new DaprClientBuilder()
                     .UseHttpEndpoint($"http://localhost:{port}")
                     .Build();
 
                 try
                 {
-                    secretValues = await client.GetSecretAsync("kubernetes",
+                    Dictionary<String, String> secretValues = await client.GetSecretAsync("kubernetes",
                         "cert-secret-store",
                         new Dictionary<String, String> { { "namespace", "default" } }
                     );

@@ -8,4 +8,4 @@ kubectl get secrets
 kubectl describe secrets cert-secret-store
 
 #View Contents 
-get secret text-secrets-store -o jsonpath='{.data}'
+kubectl get secret cert-secret-store -o jsonpath='{.data}'
