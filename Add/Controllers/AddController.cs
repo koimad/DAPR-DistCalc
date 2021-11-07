@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using ServerCore.MiddleWare.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Add.Controllers
@@ -71,8 +70,8 @@ namespace Add.Controllers
         #region Public Methods
 
         [HttpPost]
-        [SwaggerResponse((Int32)HttpStatusCode.OK, Type = typeof(ApiResponse))]
-        [SwaggerResponse((Int32)HttpStatusCode.InternalServerError, Type = typeof(ApiResponse))]
+        //[SwaggerResponse((Int32)HttpStatusCode.OK, Type = typeof(ApiResponse))]
+        //[SwaggerResponse((Int32)HttpStatusCode.InternalServerError, Type = typeof(ApiResponse))]
         public async Task<Decimal> Add(Operands operands)
         {
             _logger.LogInformation($"Adding {operands.OperandTwo} to {operands.OperandOne}");
