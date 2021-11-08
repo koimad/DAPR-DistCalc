@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
@@ -9,18 +7,18 @@ using Microsoft.Extensions.Logging;
 
 namespace Calculator.Controllers
 {
-
-
     [ApiController]
     [Route("[controller]")]
     public class CalculateController : ControllerBase
     {
-        private readonly ILogger<CalculateController> _logger;
-        private readonly DaprClient _daprClient;
+        #region Members
 
-        private static String _port = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") == null
-                    ? "3500"
-                    : Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
+        private readonly DaprClient _daprClient;
+        private readonly ILogger<CalculateController> _logger;
+
+        #endregion
+
+        #region Constructors
 
         public CalculateController(ILogger<CalculateController> logger, DaprClient daprClient)
         {
@@ -28,14 +26,20 @@ namespace Calculator.Controllers
             _daprClient = daprClient;
         }
 
+        #endregion
+
+        #region Methods
+
+        #region Public
+
         [HttpPost("[action]")]
         public async Task<Decimal> Add(Operands operands)
         {
             Decimal result = await _daprClient.InvokeMethodAsync<Operands, Decimal>(HttpMethod.Post, "addapp", "add", operands);
 
             return result;
-
         }
+
 
         [HttpPost("[action]")]
         public async Task<Decimal> Subtract(Operands operands)
@@ -69,13 +73,13 @@ namespace Calculator.Controllers
         {
             try
             {
-                Console.WriteLine($"Persisiting State {stateMessage}");
+                _logger.LogInformation($"Persisting State {stateMessage}");
 
                 await _daprClient.SaveStateAsync("statestore", stateMessage.Key, stateMessage.Value);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogCritical(e, e.Message);
             }
         }
 
@@ -83,13 +87,17 @@ namespace Calculator.Controllers
         [HttpGet("[action]")]
         public async Task<CalculateState> State()
         {
-            Console.WriteLine("State Called");
+            _logger.LogInformation("State Called");
 
             CalculateState result = await _daprClient.GetStateAsync<CalculateState>("statestore", "calculatorState");
 
-            Console.WriteLine($"Returning {result}");
+            _logger.LogInformation($"Returning {result}");
 
             return result;
         }
+
+        #endregion
+
+        #endregion
     }
 }

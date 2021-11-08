@@ -5,9 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-using Serilog;
-using Serilog.Core;
-
 namespace Calculator
 {
     public class Startup
@@ -36,7 +33,7 @@ namespace Calculator
         {
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
-            
+
             services.AddDaprClient();
 
             services.AddControllersWithViews()
@@ -77,8 +74,10 @@ namespace Calculator
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapDefaultControllerRoute();
-                endpoints.MapControllers(); // Use Attributes on the contoller and methods/             
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapControllers(); // Use Attributes on the contoller and methods
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapDaprMetrics();
             });
 
             app.UseSpa(spa => { spa.Options.SourcePath = "ClientApp"; });

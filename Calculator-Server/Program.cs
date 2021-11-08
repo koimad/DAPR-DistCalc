@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading;
 using System.Threading.Tasks;
 using Dapr.Client;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-
 using Serilog;
 using Serilog.Core;
 
@@ -23,9 +21,9 @@ namespace Calculator
         private const String _defaultPort = "3500";
 
         private static String _certificateContents = String.Empty;
+        private static Logger _logger;
 
         private static String _secret = String.Empty;
-        private static Logger _logger;
 
         #endregion
 
@@ -37,10 +35,10 @@ namespace Calculator
         {
             // Startup to configure services Certificates depend on
             webBuilder.UseStartup<Startup>();
-            
+
             // Get Certificates
             await GetCertificateDetails();
-            
+
             // Startup Kestrel
             webBuilder.UseKestrel(options => { options.ConfigureHttpsDefaults(SetupKestrel); });
         }
@@ -51,7 +49,6 @@ namespace Calculator
             String port = Environment.GetEnvironmentVariable(_daprHttpPort) == null
                 ? _defaultPort
                 : Environment.GetEnvironmentVariable(_daprHttpPort);
-
 
             _logger.Information("Loading Certificates from Secret Store");
 
@@ -102,18 +99,19 @@ namespace Calculator
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json",false,true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true,true)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true, true)
                 .Build();
 
             _logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
+                .ReadFrom
+                .Configuration(configuration)
                 .CreateLogger();
 
             _logger.Information("Starting up Calculator Server");
 
             await CreateHostBuilder(args)
-                .UseSerilog()
+                .UseSerilog(_logger)
                 .Build()
                 .RunAsync();
         }

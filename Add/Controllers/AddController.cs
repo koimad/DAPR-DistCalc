@@ -76,7 +76,7 @@ namespace Add.Controllers
         {
             _logger.LogInformation($"Adding {operands.OperandTwo} to {operands.OperandOne}");
 
-            //await GetTraceInformation(operands);
+            await GetTraceInformation(operands);
 
             Decimal result = Decimal.Parse(operands.OperandOne) + Decimal.Parse(operands.OperandTwo);
 
