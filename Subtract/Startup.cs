@@ -29,8 +29,10 @@ namespace Subtract
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#endif
 
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Subtract", Version = "v1" }); });
@@ -53,7 +55,12 @@ namespace Subtract
 
             //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapDaprMetrics();
+            });
         }
 
         #endregion

@@ -29,8 +29,10 @@ namespace Multiply
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#endif
 
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Multiply", Version = "v1" }); });
@@ -53,7 +55,13 @@ namespace Multiply
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapControllers(); // Use Attributes on the contoller and methods
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapDaprMetrics();
+            });
         }
 
         #endregion

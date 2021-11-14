@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Core;
+using Serilog.Exceptions;
 
 namespace Calculator
 {
@@ -104,16 +105,18 @@ namespace Calculator
                 .Build();
 
             _logger = new LoggerConfiguration()
+                .Enrich.WithExceptionDetails()
                 .ReadFrom
                 .Configuration(configuration)
                 .CreateLogger();
 
             _logger.Information("Starting up Calculator Server");
 
-            await CreateHostBuilder(args)
+            IHost host = CreateHostBuilder(args)
                 .UseSerilog(_logger)
-                .Build()
-                .RunAsync();
+                .Build();
+
+            await host.RunAsync();
         }
 
         #endregion

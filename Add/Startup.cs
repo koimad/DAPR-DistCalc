@@ -29,8 +29,10 @@ namespace Add
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#if !DEBUG_CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#endif
 
             services.AddControllers(config => { });
 
@@ -50,16 +52,32 @@ namespace Add
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Add v1"));
             }
+            else
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Add v1"));
+                
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapControllers(); // Use Attributes on the contoller and methods
+#if !DEBUG_CONTAINER                
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapDaprMetrics();
+#endif
+            });
         }
 
-        #endregion
+#endregion
     }
 }

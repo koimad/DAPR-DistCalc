@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  daprfrontend:
+    image: ${DOCKER_REGISTRY-}calculator-frontend
+    build:
+      context: .
+      dockerfile: Calculator-Server/Dockerfile.local
+

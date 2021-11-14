@@ -1,8 +1,26 @@
 <Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.1.0-alpha">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug Container|AnyCPU">
+      <Configuration>Debug Container</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>792f44ed-88e0-420a-a618-81c081b6bb7c</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <StartupCommand>npm start</StartupCommand>
+    <JavaScriptTestFramework>Angular</JavaScriptTestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Container|AnyCPU'">
     <StartupCommand>npm start</StartupCommand>
     <JavaScriptTestFramework>Angular</JavaScriptTestFramework>
   </PropertyGroup>

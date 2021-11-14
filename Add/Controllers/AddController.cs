@@ -74,9 +74,9 @@ namespace Add.Controllers
         //[SwaggerResponse((Int32)HttpStatusCode.InternalServerError, Type = typeof(ApiResponse))]
         public async Task<Decimal> Add(Operands operands)
         {
-            _logger.LogInformation($"Adding {operands.OperandTwo} to {operands.OperandOne}");
+            //_logger.LogInformation($"Adding {operands.OperandTwo} to {operands.OperandOne}");
 
-            await GetTraceInformation(operands);
+            //await GetTraceInformation(operands);
 
             Decimal result = Decimal.Parse(operands.OperandOne) + Decimal.Parse(operands.OperandTwo);
 

@@ -31,10 +31,13 @@ namespace Calculator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#if !DEBUG_CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#endif 
 
-            services.AddDaprClient();
+
+            //services.AddDaprClient();
 
             services.AddControllersWithViews()
                 .AddDapr();
@@ -76,15 +79,17 @@ namespace Calculator
             {
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
+#if !DEBUG_CONTAINER
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapDaprMetrics();
+#endif
             });
 
             app.UseSpa(spa => { spa.Options.SourcePath = "ClientApp"; });
         }
 
-        #endregion
+#endregion
 
-        #endregion
+#endregion
     }
 }

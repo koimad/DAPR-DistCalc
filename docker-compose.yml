@@ -1,0 +1,73 @@
+version: '3.4'
+
+services:
+  calculator-server:
+    image: ${DOCKER_REGISTRY-}calculatorserver
+    build:
+      context: .
+      dockerfile: Calculator-Server/Dockerfile.local
+    ports:
+      - "6001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+
+  calculator-server-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", 
+     "-app-id","calculator_front_end", 
+     "-app-port", "443", 
+     "-app-protocol", "http", 
+     "--app-ssl", 
+     "--log-as-json", 
+     "--log-level", "info", 
+     "--config", "/app/dapr/config.yaml",
+     "--components-path", "/app/dapr/components",
+     #"--dapr-grpc-port", "50001",
+     #"--dapr-http-port", "3500",
+     #"--metrics-port" ,"3600",
+     #"--placement-host-address","127.0.0.1:6050"
+    ]
+    volumes:
+      - "c:/Users/koima/source/repos/DAPR-DistCalc/dapr-docker:/app/dapr"
+    depends_on:
+      - calculator-server
+    network_mode: "service:calculator-server"
+
+  addapp-server:
+    image: ${DOCKER_REGISTRY-}addappserver
+    build:
+      context: .
+      dockerfile: Add/Dockerfile.local
+    ports:
+      - "5001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+
+  addapp-server-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", 
+     "-app-id","addapp", 
+     "-app-port", "443", 
+     "-app-protocol", "http", 
+     "--app-ssl", 
+     "--log-as-json", 
+     "--log-level", "info", 
+     "--config", "/app/dapr/config.yaml",
+     "--components-path", "/app/dapr/components",
+     #"--dapr-grpc-port", "50002",
+     #"--dapr-http-port", "3502",
+     #"--metrics-port" ,"3602",
+     #"--placement-host-address","127.0.0.1:6050"
+    ]
+    volumes:
+      - "c:/Users/koima/source/repos/DAPR-DistCalc/dapr-docker:/app/dapr"
+    depends_on:
+      - addapp-server
+    network_mode: "service:addapp-server"
+
+networks:
+  default:
+    external: true
+    name: dapr-distcalc_default
