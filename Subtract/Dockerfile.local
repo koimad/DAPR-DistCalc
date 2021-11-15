@@ -2,14 +2,14 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
-#EXPOSE 443
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Subtract/Subtract.csproj", "Subtract/"]
 RUN dotnet restore "Subtract/Subtract.csproj"
-COPY . .
+
+COPY "Subtract/**" "Subtract"
 WORKDIR "/src/Subtract"
 RUN dotnet build "Subtract.csproj" -c "Debug Container" -o /app/build
 

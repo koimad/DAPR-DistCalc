@@ -10,7 +10,7 @@ services:
       - "6001:443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443
 
   calculator-server-dapr:
     image: "daprio/daprd:latest"
@@ -43,7 +43,7 @@ services:
       - "5001:443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443
 
   addapp-server-dapr:
     image: "daprio/daprd:latest"
@@ -76,7 +76,7 @@ services:
       - "5201:443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443
 
   divideapp-server-dapr:
     image: "daprio/daprd:latest"
@@ -109,7 +109,7 @@ services:
       - "5301:443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443
 
   multiplyapp-server-dapr:
     image: "daprio/daprd:latest"
@@ -134,7 +134,7 @@ services:
     network_mode: "service:multiplyapp-server"
 
   subtractapp-server:
-    image: ${DOCKER_REGISTRY-}addappserver
+    image: ${DOCKER_REGISTRY-}subtractappserver
     build:
       context: .
       dockerfile: Subtract/Dockerfile.local
@@ -142,7 +142,7 @@ services:
       - "5401:443"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443
 
   subtractapp-server-dapr:
     image: "daprio/daprd:latest"

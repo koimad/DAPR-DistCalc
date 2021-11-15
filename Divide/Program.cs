@@ -33,7 +33,7 @@ namespace Divide
 
         #region Private
 
-#if !DEBUG_CONTAINER 
+#if !CONTAINER 
         private static async void ConfigureWebHost(IWebHostBuilder webBuilder)
         {
             // Startup to configure services Certificates depend on

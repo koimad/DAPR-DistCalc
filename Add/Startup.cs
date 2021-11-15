@@ -29,7 +29,7 @@ namespace Add
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if !DEBUG_CONTAINER
+#if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
 #endif
@@ -41,7 +41,7 @@ namespace Add
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)                                           
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //app.UseResponseAndExceptionWrapper();
             //app.UseAutoWrapper();
@@ -65,13 +65,13 @@ namespace Add
             {
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
-#if !DEBUG_CONTAINER                
+#if !CONTAINER
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapDaprMetrics();
 #endif
             });
         }
 
-#endregion
+        #endregion
     }
 }

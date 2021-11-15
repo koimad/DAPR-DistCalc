@@ -29,7 +29,7 @@ namespace Subtract
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if !DEBUG_CONTAINER
+#if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
 #endif
@@ -60,7 +60,7 @@ namespace Subtract
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-#if !DEBUG_CONTAINER                
+#if !CONTAINER                
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapDaprMetrics();
 #endif

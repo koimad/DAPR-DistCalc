@@ -4,15 +4,20 @@
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>701563ce-07b0-4761-af58-618d8dced1fa</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Configurations>Debug;Release;Debug Container</Configurations>
+    <Configurations>Debug;Release;Debug Container;Release Container</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);CONTAINER</DefineConstants>
+    <DefineConstants>$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Container|AnyCPU'">
     <DefineConstants>$(DefineConstants);CONTAINER</DefineConstants>
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Container|AnyCPU'">

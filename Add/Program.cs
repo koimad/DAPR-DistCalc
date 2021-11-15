@@ -33,7 +33,7 @@ namespace Add
 
         #region Private
 
-#if !DEBUG_CONTAINER 
+#if !CONTAINER 
 
         private static async void ConfigureWebHost(IWebHostBuilder webBuilder)
         {

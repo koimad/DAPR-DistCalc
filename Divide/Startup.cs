@@ -29,7 +29,7 @@ namespace Divide
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if !DEBUG_CONTAINER
+#if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
 #endif
@@ -60,7 +60,7 @@ namespace Divide
             {
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
-#if !DEBUG_CONTAINER                
+#if !CONTAINER                
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapDaprMetrics();
 #endif

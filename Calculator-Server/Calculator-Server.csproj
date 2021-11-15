@@ -7,7 +7,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <UserSecretsId>086802cf-c3a9-49c5-a8b4-45fdbde8cb12</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Configurations>Debug;Release;Debug Container</Configurations>
+    <Configurations>Debug;Release;Debug Container;Release Container</Configurations>
   </PropertyGroup>
 
 	<!--Add Aditional Column for Debugging to the Angular App.-->
@@ -21,8 +21,12 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DefineConstants>$(DefineConstants)</DefineConstants>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Container|AnyCPU'">
+	  <DefineConstants>$(DefineConstants);CONTAINER</DefineConstants>
+	  <Optimize>True</Optimize>
+	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Container|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)</DefineConstants>
+	  <DefineConstants>$(DefineConstants);CONTAINER</DefineConstants>
 	</PropertyGroup>
 
   <ItemGroup>
