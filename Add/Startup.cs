@@ -32,8 +32,9 @@ namespace Add
 #if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#else
+            services.AddHealthChecks();
 #endif
-
             services.AddControllers(config => { });
 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Add", Version = "v1" }); });
@@ -65,8 +66,9 @@ namespace Add
             {
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
-#if !CONTAINER
                 endpoints.MapHealthChecks("/health");
+#if !CONTAINER
+                
                 endpoints.MapDaprMetrics();
 #endif
             });

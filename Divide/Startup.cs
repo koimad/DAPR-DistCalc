@@ -32,6 +32,8 @@ namespace Divide
 #if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#else
+            services.AddHealthChecks();
 #endif
 
             services.AddControllers();
@@ -60,8 +62,9 @@ namespace Divide
             {
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
-#if !CONTAINER                
                 endpoints.MapHealthChecks("/health");
+#if !CONTAINER                
+                
                 endpoints.MapDaprMetrics();
 #endif
             });

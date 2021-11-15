@@ -32,6 +32,8 @@ namespace Subtract
 #if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
+#else
+            services.AddHealthChecks();
 #endif
 
             services.AddControllers();
@@ -59,9 +61,10 @@ namespace Subtract
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-#if !CONTAINER                
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapControllers(); // Use Attributes on the contoller and methods
                 endpoints.MapHealthChecks("/health");
+#if !CONTAINER                
                 endpoints.MapDaprMetrics();
 #endif
             });

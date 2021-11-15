@@ -34,8 +34,9 @@ namespace Calculator
 #if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
-#endif 
-
+#else
+            services.AddHealthChecks();
+#endif
 
             //services.AddDaprClient();
 
@@ -79,8 +80,11 @@ namespace Calculator
             {
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
-#if !CONTAINER
+
                 endpoints.MapHealthChecks("/health");
+
+#if !CONTAINER
+
                 endpoints.MapDaprMetrics();
 #endif
             });
