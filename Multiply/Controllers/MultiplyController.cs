@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Multiply.Controllers
 {
@@ -11,12 +8,24 @@ namespace Multiply.Controllers
     [Route("[controller]")]
     public class MultiplyController : ControllerBase
     {
+        #region Members
+
         private readonly ILogger<MultiplyController> _logger;
+
+        #endregion
+
+        #region Constructors
 
         public MultiplyController(ILogger<MultiplyController> logger)
         {
             _logger = logger;
         }
+
+        #endregion
+
+        #region Methods
+
+        #region Public
 
         [HttpPost]
         public Decimal Multiply(Operands operands)
@@ -24,5 +33,9 @@ namespace Multiply.Controllers
             _logger.LogInformation($"Multiplying {operands.OperandTwo} with {operands.OperandOne}");
             return Decimal.Parse(operands.OperandOne) * Decimal.Parse(operands.OperandTwo);
         }
+
+        #endregion
+
+        #endregion
     }
 }
