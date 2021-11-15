@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Dapr.Client;
@@ -25,6 +26,7 @@ namespace Calculator
         private static Logger _logger;
 
         private static String _secret = String.Empty;
+        private static IWebHostBuilder _webBuilder;
 
         #endregion
 
@@ -32,17 +34,38 @@ namespace Calculator
 
         #region Private
 
+#if !DEBUG_CONTAINER 
+
         private static async void ConfigureWebHost(IWebHostBuilder webBuilder)
         {
             // Startup to configure services Certificates depend on
             webBuilder.UseStartup<Startup>();
 
+            // Register Kestrel
+            webBuilder.UseKestrel();
+
             // Get Certificates
             await GetCertificateDetails();
 
-            // Startup Kestrel
-            webBuilder.UseKestrel(options => { options.ConfigureHttpsDefaults(SetupKestrel); });
+            // Configure Kestrel
+            webBuilder.ConfigureKestrel(options =>
+            {
+                options.ConfigureHttpsDefaults(SetupKestrel);
+            });
         }
+#else
+
+        private static void ConfigureWebHost(IWebHostBuilder webBuilder)
+        {
+            _webBuilder = webBuilder;
+            // Startup to configure services Certificates depend on
+            webBuilder.UseStartup<Startup>();
+
+            // Register Kestrel
+            webBuilder.UseKestrel();
+        }
+
+#endif
 
 
         private static async Task GetCertificateDetails()
@@ -115,6 +138,15 @@ namespace Calculator
             IHost host = CreateHostBuilder(args)
                 .UseSerilog(_logger)
                 .Build();
+
+            if (_webBuilder != null)
+            {
+                // Get Certificates
+                await GetCertificateDetails();
+
+                // Configure Kestrel
+                _webBuilder.ConfigureKestrel(options => { options.ConfigureHttpsDefaults(SetupKestrel); });
+            }
 
             await host.RunAsync();
         }

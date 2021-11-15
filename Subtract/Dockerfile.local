@@ -11,10 +11,10 @@ COPY ["Subtract/Subtract.csproj", "Subtract/"]
 RUN dotnet restore "Subtract/Subtract.csproj"
 COPY . .
 WORKDIR "/src/Subtract"
-RUN dotnet build "Subtract.csproj" -c Release -o /app/build
+RUN dotnet build "Subtract.csproj" -c "Debug Container" -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Subtract.csproj" -c Release -o /app/publish
+RUN dotnet publish "Subtract.csproj" -c "Debug Container" -o /app/publish
 
 FROM base AS final
 WORKDIR /app

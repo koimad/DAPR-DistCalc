@@ -67,6 +67,105 @@ services:
       - addapp-server
     network_mode: "service:addapp-server"
 
+  divideapp-server:
+    image: ${DOCKER_REGISTRY-}divideappserver
+    build:
+      context: .
+      dockerfile: Divide/Dockerfile.local
+    ports:
+      - "5201:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+
+  divideapp-server-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", 
+     "-app-id","divideapp", 
+     "-app-port", "443", 
+     "-app-protocol", "http", 
+     "--app-ssl", 
+     "--log-as-json", 
+     "--log-level", "info", 
+     "--config", "/app/dapr/config.yaml",
+     "--components-path", "/app/dapr/components",
+     #"--dapr-grpc-port", "50002",
+     #"--dapr-http-port", "3502",
+     #"--metrics-port" ,"3602",
+     #"--placement-host-address","127.0.0.1:6050"
+    ]
+    volumes:
+      - "c:/Users/koima/source/repos/DAPR-DistCalc/dapr-docker:/app/dapr"
+    depends_on:
+      - divideapp-server
+    network_mode: "service:divideapp-server"
+
+  multiplyapp-server:
+    image: ${DOCKER_REGISTRY-}multiplyappserver
+    build:
+      context: .
+      dockerfile: Multiply/Dockerfile.local
+    ports:
+      - "5301:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+
+  multiplyapp-server-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", 
+     "-app-id","multiplyapp", 
+     "-app-port", "443", 
+     "-app-protocol", "http", 
+     "--app-ssl", 
+     "--log-as-json", 
+     "--log-level", "info", 
+     "--config", "/app/dapr/config.yaml",
+     "--components-path", "/app/dapr/components",
+     #"--dapr-grpc-port", "50002",
+     #"--dapr-http-port", "3502",
+     #"--metrics-port" ,"3602",
+     #"--placement-host-address","127.0.0.1:6050"
+    ]
+    volumes:
+      - "c:/Users/koima/source/repos/DAPR-DistCalc/dapr-docker:/app/dapr"
+    depends_on:
+      - addapp-server
+    network_mode: "service:multiplyapp-server"
+
+  subtractapp-server:
+    image: ${DOCKER_REGISTRY-}addappserver
+    build:
+      context: .
+      dockerfile: Subtract/Dockerfile.local
+    ports:
+      - "5401:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+
+  subtractapp-server-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", 
+     "-app-id","subtractapp", 
+     "-app-port", "443", 
+     "-app-protocol", "http", 
+     "--app-ssl", 
+     "--log-as-json", 
+     "--log-level", "info", 
+     "--config", "/app/dapr/config.yaml",
+     "--components-path", "/app/dapr/components",
+     #"--dapr-grpc-port", "50002",
+     #"--dapr-http-port", "3502",
+     #"--metrics-port" ,"3602",
+     #"--placement-host-address","127.0.0.1:6050"
+    ]
+    volumes:
+      - "c:/Users/koima/source/repos/DAPR-DistCalc/dapr-docker:/app/dapr"
+    depends_on:
+      - subtractapp-server
+    network_mode: "service:subtractapp-server"
+
 networks:
   default:
     external: true

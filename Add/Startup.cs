@@ -54,15 +54,9 @@ namespace Add
             }
             else
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Add v1"));
-                
-                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            
             app.UseRouting();
 
             app.UseAuthorization();
