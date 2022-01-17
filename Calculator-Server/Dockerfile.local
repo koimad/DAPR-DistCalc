@@ -24,7 +24,6 @@ COPY "Calculator-Server/**" "Calculator-Server"
 WORKDIR "/src/Calculator-Server"
 RUN dotnet build "Calculator-Server.csproj" -c "Debug Container" -o /app/build
 
-
 WORKDIR /src
 COPY "Calculator-Ang/" "Calculator-Ang/"
 
@@ -38,8 +37,15 @@ FROM build AS publish
 RUN dotnet publish "Calculator-Server.csproj" -c "Debug Container" -o /app/publish
 
 FROM base AS final
+
+WORKDIR /usr/local/share/ca-certificates
+ADD /Certificates/caclulator-server.crt .
+RUN chmod 644 caclulator-server.crt && update-ca-certificates
+
 WORKDIR /app
+
 COPY --from=publish /app/publish .
 COPY --from=build /src/Calculator-Ang/dist ClientApp/.
+COPY --from=build /usr/local/share/ca-certificates .
 
 ENTRYPOINT ["dotnet", "Calculator-Server.dll"]

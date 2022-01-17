@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection.PortableExecutable;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using Dapr.Client;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -26,7 +28,6 @@ namespace Calculator
         private static Logger _logger;
 
         private static String _secret = String.Empty;
-        private static IWebHostBuilder _webBuilder;
 
         #endregion
 
@@ -34,38 +35,21 @@ namespace Calculator
 
         #region Private
 
-#if !CONTAINER 
-
-        private static async void ConfigureWebHost(IWebHostBuilder webBuilder)
-        {
-            // Startup to configure services Certificates depend on
-            webBuilder.UseStartup<Startup>();
-
-            // Register Kestrel
-            webBuilder.UseKestrel();
-
-            // Get Certificates
-            await GetCertificateDetails();
-
-            // Configure Kestrel
-            webBuilder.ConfigureKestrel(options =>
-            {
-                options.ConfigureHttpsDefaults(SetupKestrel);
-            });
-        }
-#else
-
         private static void ConfigureWebHost(IWebHostBuilder webBuilder)
         {
-            _webBuilder = webBuilder;
+            // Configure Kestrel
+            _logger.Information("ConfigureKestrel");
+
+            webBuilder.UseKestrel(options =>
+            {
+                _logger.Information("ConfigureHttpsDefaults");
+                options.ConfigureHttpsDefaults(SetupKestrel);
+            });
+
             // Startup to configure services Certificates depend on
+
             webBuilder.UseStartup<Startup>();
-
-            // Register Kestrel
-            webBuilder.UseKestrel();
         }
-
-#endif
 
 
         private static async Task GetCertificateDetails()
@@ -88,6 +72,8 @@ namespace Calculator
                 );
                 _secret = secretValues["password"];
                 _certificateContents = secretValues["certificate"];
+
+                _logger.Information($"Loaded Certificate : {_certificateContents}");
             }
             catch (Exception e)
             {
@@ -98,14 +84,39 @@ namespace Calculator
 
         private static void SetupKestrel(HttpsConnectionAdapterOptions config)
         {
-            Byte[] bytes = Convert.FromBase64String(_certificateContents);
-            Char[] pw = _secret.ToCharArray();
+            _logger.Information("SetupKestrel");
 
-            ReadOnlySpan<Byte> certContents = new(bytes);
-            ReadOnlySpan<Char> passwordContents = new(pw);
+            config.ServerCertificateSelector = (c, n) =>
+            {
+                if (String.IsNullOrWhiteSpace(_certificateContents))
+                {
+                    GetCertificateDetails();
+                }
 
-            X509Certificate2 cert = new(certContents, passwordContents);
-            config.ServerCertificate = cert;
+                Int32 tryCount = 0;
+
+                while (String.IsNullOrWhiteSpace(_certificateContents))
+                {
+                    _logger.Information("Waiting For Certificate To Load");
+                    Thread.Sleep(1000);
+                    tryCount++;
+                    if (tryCount > 30)
+                    {
+                        throw new OperationException("Unable to load a valid certificate");
+                    }
+                }
+
+                Byte[] bytes = Convert.FromBase64String(_certificateContents);
+
+                Char[] pw = _secret.ToCharArray();
+
+                ReadOnlySpan<Byte> certContents = new(bytes);
+                ReadOnlySpan<Char> passwordContents = new(pw);
+
+                X509Certificate2 cert = new(certContents, passwordContents);
+                config.ServerCertificate = cert;
+                return cert;
+            };
         }
 
         #endregion
@@ -133,20 +144,11 @@ namespace Calculator
                 .Configuration(configuration)
                 .CreateLogger();
 
-            _logger.Information("Starting up Calculator Server");
+            _logger.Information($"Starting up Calculator Server on host : {Dns.GetHostName()}");
 
             IHost host = CreateHostBuilder(args)
                 .UseSerilog(_logger)
                 .Build();
-
-            if (_webBuilder != null)
-            {
-                // Get Certificates
-                await GetCertificateDetails();
-
-                // Configure Kestrel
-                _webBuilder.ConfigureKestrel(options => { options.ConfigureHttpsDefaults(SetupKestrel); });
-            }
 
             await host.RunAsync();
         }

@@ -29,7 +29,7 @@
     <JavaScriptTestFramework>Angular</JavaScriptTestFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="**" Exclude="*.esproj; **\node_modules\**" />
+    <Script Include="**" Exclude="*.esproj;node_modules\**" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="cypress\screenshots\" />

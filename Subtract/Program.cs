@@ -36,20 +36,22 @@ namespace Subtract
 
         private static async void ConfigureWebHost(IWebHostBuilder webBuilder)
         {
+            _webBuilder = webBuilder;
+
             // Startup to configure services Certificates depend on
             webBuilder.UseStartup<Startup>();
 
             // Register Kestrel
             webBuilder.UseKestrel();
 
-            // Get Certificates
-            await GetCertificateDetails();
+            //// Get Certificates
+            //await GetCertificateDetails();
 
-            // Configure Kestrel
-            webBuilder.ConfigureKestrel(options =>
-            {
-                options.ConfigureHttpsDefaults(SetupKestrel);
-            });
+            //// Configure Kestrel
+            //webBuilder.ConfigureKestrel(options =>
+            //{
+            //    options.ConfigureHttpsDefaults(SetupKestrel);
+            //});
         }
 #else
 

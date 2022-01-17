@@ -79,8 +79,8 @@ Global
 		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release Container|Any CPU.Build.0 = Release Container|Any CPU
 		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC544183-0544-4A57-B00F-B1367A192FA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug Container|Any CPU.ActiveCfg = Debug Container|Any CPU
-		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug Container|Any CPU.Build.0 = Debug Container|Any CPU
+		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug Container|Any CPU.ActiveCfg = Debug|Any CPU
+		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug Container|Any CPU.Build.0 = Debug|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{792F44ED-88E0-420A-A618-81C081B6BB7C}.Release Container|Any CPU.ActiveCfg = Release Container|Any CPU

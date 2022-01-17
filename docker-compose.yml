@@ -3,6 +3,7 @@ version: '3.4'
 services:
   calculator-server:
     image: ${DOCKER_REGISTRY-}calculatorserver
+    hostname: calculatorserver
     build:
       context: .
       dockerfile: Calculator-Server/Dockerfile.local
@@ -13,7 +14,7 @@ services:
       - ASPNETCORE_URLS=https://+:443
 
   calculator-server-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.0"
     command: [ "./daprd", 
      "-app-id","calculator_front_end", 
      "-app-port", "443", 
@@ -36,6 +37,7 @@ services:
 
   addapp-server:
     image: ${DOCKER_REGISTRY-}addappserver
+    hostname: addserver
     build:
       context: .
       dockerfile: Add/Dockerfile.local
@@ -46,7 +48,7 @@ services:
       - ASPNETCORE_URLS=https://+:443
 
   addapp-server-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.0"
     command: [ "./daprd", 
      "-app-id","addapp", 
      "-app-port", "443", 
@@ -69,6 +71,7 @@ services:
 
   divideapp-server:
     image: ${DOCKER_REGISTRY-}divideappserver
+    hostname: divideserver
     build:
       context: .
       dockerfile: Divide/Dockerfile.local
@@ -79,7 +82,7 @@ services:
       - ASPNETCORE_URLS=https://+:443
 
   divideapp-server-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.0"
     command: [ "./daprd", 
      "-app-id","divideapp", 
      "-app-port", "443", 
@@ -102,6 +105,7 @@ services:
 
   multiplyapp-server:
     image: ${DOCKER_REGISTRY-}multiplyappserver
+    hostname: multiplyserver
     build:
       context: .
       dockerfile: Multiply/Dockerfile.local
@@ -112,7 +116,7 @@ services:
       - ASPNETCORE_URLS=https://+:443
 
   multiplyapp-server-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.0"
     command: [ "./daprd", 
      "-app-id","multiplyapp", 
      "-app-port", "443", 
@@ -135,6 +139,7 @@ services:
 
   subtractapp-server:
     image: ${DOCKER_REGISTRY-}subtractappserver
+    hostname: subtractserver
     build:
       context: .
       dockerfile: Subtract/Dockerfile.local
@@ -145,7 +150,7 @@ services:
       - ASPNETCORE_URLS=https://+:443
 
   subtractapp-server-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.0"
     command: [ "./daprd", 
      "-app-id","subtractapp", 
      "-app-port", "443", 

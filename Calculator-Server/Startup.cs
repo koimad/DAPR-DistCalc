@@ -1,9 +1,16 @@
+using System;
+using System.Net;
+
+using HealthChecks.UI.Client;
+
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+
 
 namespace Calculator
 {
@@ -34,12 +41,18 @@ namespace Calculator
 #if !CONTAINER
             // Add Dapr Sidekick
             services.AddDaprSidekick(Configuration);
-#else
-            services.AddHealthChecks();
 #endif
 
-            //services.AddDaprClient();
+            services.AddHealthChecks().AddCheck<MemoryHealthCheck>("Memory");
 
+            services.AddHealthChecksUI((option) =>
+            {
+                option.SetEvaluationTimeInSeconds(15);
+            }).AddInMemoryStorage();
+
+
+            services.AddDaprClient();
+            services.AddControllers();
             services.AddControllersWithViews()
                 .AddDapr();
 
@@ -78,10 +91,20 @@ namespace Calculator
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+
+                endpoints.MapHealthChecksUI(setup =>
+                {
+                    setup.UIPath = "/health-ui";
+                    setup.ApiPath = "/health-json";
+                });
+
                 endpoints.MapDefaultControllerRoute();
                 //endpoints.MapControllers(); // Use Attributes on the contoller and methods
-
-                endpoints.MapHealthChecks("/health");
 
 #if !CONTAINER
 
