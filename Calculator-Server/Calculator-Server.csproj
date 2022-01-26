@@ -33,8 +33,8 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.2" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.5.0" />
-    <PackageReference Include="Dapr.Client" Version="1.5.0" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.6.0" />
+    <PackageReference Include="Dapr.Client" Version="1.6.0" />
     <PackageReference Include="Man.Dapr.Sidekick.AspNetCore" Version="1.2.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.1" />
